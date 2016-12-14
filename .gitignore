@@ -1,4 +1,6 @@
 /target
+out/
+node_modules/
 .idea/
 *.iml
 /classes

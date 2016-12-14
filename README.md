@@ -2,11 +2,11 @@
 
 Trivial ClojureScript wrapper for [node-fibers](https://github.com/laverdet/node-fibers). Originally wrote to be used in Macchiato, but can be used standalone.
 
-Current version is `0.0.1`.
+Current version is `0.0.2` and probably changing regularly.
 
 ## Rationale
 
-We're building macchiato on node. Everything's async. We need a coherent way of approaching this.
+We're building Macchiato on node. Everything's async. We need a coherent way of approaching this.
 
 Originally we discussed keeping this as part of macchiato/core, since chances are *every library we use will need it*. Then again, we can use other Macchiato libraries without using the ring-like functionality of `core` - say, database access, which will depend on futures, could be used to build lambdas for AWS.
 
@@ -18,9 +18,8 @@ All the things!  This is just a rough draft and the API might change.
 
 - Tests would be nice
 - More documentation
+- Decide on development process. I'll probably follow something like Gitlab-flow..
 
 # License
 
-Copyright © 2016 Numergent Limited.
-
-Distributed under the MIT License.
+Copyright © 2016 Numergent Limited. Distributed under the MIT License.
