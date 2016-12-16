@@ -11,13 +11,10 @@
                  (js/setTimeout #(callback nil (+ a b)) 100)
                  callback)))
 
-(identity 4)
-
 (deftest verify-test-setup
   (is test-object)
   (is (= 7 (.sum test-object 3 4)))
-  (is (fn? (.sumLater test-object 3 4 identity)))
-  )
+  (is (fn? (.sumLater test-object 3 4 identity))))
 
 (deftest test-wrapping
   (testing "Wrapping a basic object"
@@ -45,8 +42,7 @@
             (is (= [9 101 23]
                    (->> (map-indexed #(.sumLaterFuture wrapper %2 %1)
                                      [9 100 21])
-                        (map wait))
-                   ))
+                        (map wait))))
             (catch :default e
               (is false "Unexpected exception while evaluating task")
               (.error js/console "Error:" e))
