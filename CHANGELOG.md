@@ -4,6 +4,12 @@ This change log follows the conventions of [keepachangelog.com](http://keepachan
 
 Assume that any upgrade before we hit 0.1.0 is potentially breaking.
 
+## 0.0.3-SNAPSHOT
+
+### Other
+
+- CircleCI integration
+
 ## 0.0.2
 
 - **BREAKING**: Renamed `macchiato.futures` -> `macchiato.futures.core`

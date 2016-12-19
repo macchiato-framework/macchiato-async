@@ -18,9 +18,9 @@
   From the node-fibers documentation:
 
   Basically this is useful if you want to run a task in a future, you
-  aren't interested in its return value, but if it throws you don't want the exception to be
-  lost. If this fiber throws, an exception will be thrown to the event loop and node will
-  probably fall down."
+  aren't interested in its return value, but if it throws you don't want the
+  exception to be lost. If this fiber throws, an exception will be thrown to
+  the event loop and node will probably fall down."
   [f]
   (->> f (.task Future) .detach))
 

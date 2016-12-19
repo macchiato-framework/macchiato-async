@@ -1,5 +1,8 @@
 # macchiato/futures
 
+Build status: 
+[![CircleCI](https://circleci.com/gh/macchiato-framework/macchiato-futures.svg?style=svg)](https://circleci.com/gh/macchiato-framework/macchiato-futures)
+
 Trivial ClojureScript wrapper for [node-fibers](https://github.com/laverdet/node-fibers). Originally wrote to be used in Macchiato, but can be used standalone.
 
 Current version is `0.0.3-SNAPSHOT` and probably changing regularly. 
