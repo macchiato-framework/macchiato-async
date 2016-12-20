@@ -17,13 +17,18 @@ Originally we discussed keeping this as part of macchiato/core, since chances ar
 
 Keeping it independent allows us this flexibility.
 
+## Usage
+
+See `macchiato.test.futures.core` for sample uses.
+
 
 ## TODO
 
 All the things!  This is just a rough draft and the API might change. 
 
-- Tests would be nice
+- We have some initial tests, expanding the test cases would be nice.
 - More documentation
+
 
 
 # License
