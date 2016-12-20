@@ -38,7 +38,7 @@
       (is (fn? (aget wrapper "sum")))
       (is (fn? (aget wrapper "sumLater")))))
   (testing "Wrapping with suffix"
-    (let [wrapper (wrap-future test-object false "Future" false)]
+    (let [wrapper (wrap-future test-object "Future" false false)]
       (is (some? wrapper))
       (is (fn? (aget wrapper "sumFuture")))
       (is (fn? (aget wrapper "sumLaterFuture"))))))

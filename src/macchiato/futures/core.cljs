@@ -6,10 +6,10 @@
   "Wraps an object or function in a future. Notice that by default we won't
   use any suffix."
   ([o]
-   (wrap-future o false "" false))
+   (wrap-future o "" false false))
   ([o suffix]
    (.wrap Future o false suffix false))
-  ([o multi? suffix stop?]
+  ([o suffix multi? stop?]
    (.wrap Future o multi? suffix stop?)))
 
 (defn detached-task

@@ -6,6 +6,10 @@ Assume that any upgrade before we hit 0.1.0 is potentially breaking.
 
 ## 0.0.3-SNAPSHOT
 
+### Breaking changes
+
+- Changed parameter order for `wrap-future`. Previously the full argument signature matched the parameter order from `Future.wrap`, but I think it's better to keep the parameters from the various ClojureScript signatures in a consistent order.  
+
 ### Other
 
 - CircleCI integration
