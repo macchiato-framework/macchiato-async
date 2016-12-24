@@ -2,6 +2,8 @@
   (:require [cljs.nodejs :as node]))
 
 (def Future (node/require "fibers/future"))
+(defrecord ^{:doc "A collection of futures which must all complete"}
+  Futures [futures])
 
 (defn- js-apply
   "Applies a javascript function to a 'this' context and arguments
@@ -44,23 +46,36 @@
   [f]
   (.task Future f))
 
-(defn wait
-  "Waits on the given futures:
+(def wait
+  "Waits on a future
+   args: [future]
+   returns: value of future"
+  (memfn wait))
+
+(defn wait+
+  "Waits on several futures:
    args: [& fs]
-   returns: when all futures are done"
+   returns: vector of future values"
   [& fs]
-  (when-let [[f & fss] (seq fs)]
-    (if (seq fss)
-      (js-apply (.-wait Future) Future fs)
-      (.wait f))))
+  (when (seq fs)
+    (if (next fs)
+      (js-apply (memfn wait) Future fs)
+      (wait (first fs)))
+    (mapv deref fs)))
 
+;; Give futures some clojurescript niceties
 
-(defrecord ^{:doc "A collection of futures which must all complete"}
-  Futures [futures]
+(extend-protocol IDeref
+  Future
+  (-deref [f]
+    (wait f)))
+
+(extend-type Futures
+  Object
+  (wait [self]
+    (apply wait+ (.-futures self)))
   IDeref
-  (-deref [_]
-    (apply wait futures)
-    (map (memfn get) futures)))
+  (-deref [self] (apply wait+ (:futures self))))
 
 (defn combine
   "Combine several futures into one
@@ -68,12 +83,6 @@
    returns: Futures, or nil if no futures provided"
   [& fs]
   (when (seq fs)
-    (apply ->Futures fs)))
+    (->Futures fs)))
 
-;; Give futures some clojurescript niceties
-
-(extend-protocol IDeref
-  Future
-  (-deref [f]
-    (.wait f)))
   
