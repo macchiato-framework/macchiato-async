@@ -1,6 +1,7 @@
 (ns macchiato.test.futures.core
   (:require [clojure.test :refer [deftest testing is async]]
-            [macchiato.futures.core :refer [wrap-future detached-task task wait]]))
+            [macchiato.futures.core
+             :refer [wrap-future detached-task task wait wait+ combine Futures]]))
 
 
 ;; Going to create a mock Javascript object which has two methods. One of them
@@ -51,6 +52,11 @@
           (try
             (is (= 37 (wait (.sumLaterFuture wrapper 19 18))))
             (is (= 42 (wait (.sumLaterFuture wrapper 22 20))))
+            (is (= [37 42]
+                   (wait+ (.sumLaterFuture wrapper 19 18) (.sumLaterFuture wrapper 22 20))))
+            (let [c (combine (.sumLaterFuture wrapper 19 18) (.sumLaterFuture wrapper 22 20))]
+              (is (instance? Futures c))
+              (is (= [37 42] (wait c))))
             (is (= [2 5 10]
                    (map-indexed #(wait (.sumLaterFuture wrapper %2 (dec %1)))
                                 [3 5 9])))
