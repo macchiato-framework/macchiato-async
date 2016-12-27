@@ -1,36 +1,27 @@
-(ns macchiato.futures.core)
+(ns macchiato.futures.core
+  (:require [macchiato.futures.fut :as future]))
 
-(def Future (js/require "fibers/future"))
+;; Compatibility shim
 
-(defn wrap-future
-  "Wraps an object or function in a future. Notice that by default we won't
-  use any suffix."
-  ([o]
-   (wrap-future o "" false false))
-  ([o suffix]
-   (.wrap Future o false suffix false))
-  ([o suffix multi? stop?]
-   (.wrap Future o multi? suffix stop?)))
+(def ^{:deprecated "0.7"} Future
+  "DEPRECATED: use `macchiato.futures.future/Future` instead"
+  future/Future)
 
-(defn detached-task
-  "Runs a function as a detached task.
+(def ^{:deprecated "0.7"} wrap-future
+  "DEPRECATED: use `macchiato.futures.future/wrap` instead"
+  future/wrap)
 
-  From the node-fibers documentation:
+(def ^{:deprecated "0.7"} task
+  "DEPRECATED: use `macchiato.futures.future/call` instead"
+  future/call)
 
-  Basically this is useful if you want to run a task in a future, you
-  aren't interested in its return value, but if it throws you don't want the
-  exception to be lost. If this fiber throws, an exception will be thrown to
-  the event loop and node will probably fall down."
-  [f]
-  (->> f (.task Future) .detach))
+(def ^{:deprecated "0.7"} detached-task
+  "DEPRECATED. Alternatives:
+  `macchiato.futures/fire-and-forget`
+  `macchiato.futures.future/call-forget`"
+  future/call-forget)
 
-(defn task
-  "Runs a function as a task."
-  [f]
-  (.task Future f))
+(def ^{:deprecated "0.7"} wait
+  "DEPRECATED: use `deref` instead"
+  deref)
 
-
-(defn wait
-  "Waits on a future. Surprise, surprise."
-  [f]
-  (.wait f))
