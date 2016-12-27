@@ -49,10 +49,12 @@
    args: [fiber]"
   (memfn reset))
   
-(def throw-in
-  "Makes the current/next call to yield by the fiber throw
-   args: [fiber exception]"
-  (memfn throwInto))
+(defn throw-in
+  "Makes the current yield by the fiber throw
+   args: [fiber exception]
+   throws: if fiber is not currently yielding"
+  [f e]
+  (.throwInto f e))
 
 (defn yield
   "Releases control of the current fiber, optionally presenting a result

@@ -12,6 +12,15 @@
                 (js/setTimeout #(callback nil (+ a b)) 100)
                 callback)))
 
+(defn wrap [done f]
+  (fn []
+    (try (f)
+      (catch :default e
+        (is false "Unexpected exception while evaluating task")
+        (.error js/console "Error:" e))
+      (finally
+        (done)))))
+
 (deftest basics
   (let [f (fut/empty)
         p (pro/empty)
@@ -54,35 +63,22 @@
         b (.sumLaterFuture wrapper 22 20)]
     (testing "isa?"
       (is (every? fut/isa? [a b])))
-    (->> (try
-           (testing "results"
-             (is (= [37 42] [@(.sumLaterFuture wrapper 19 18)
-                             @(.sumLaterFuture wrapper 22 20)]))
-             (is (= [9 101 23] (->> [9 100 21]
-                                    (map-indexed #(.sumLaterFuture wrapper %2 %1))
-                                    doall (mapv deref)))))
-           (catch :default e
-             (is false "Unexpected exception while evaluating task")
-             (.error js/console "Error:" e))
-           (finally
-             (done)))
-         (fn []) fut/call (async done))))
+    (->> (testing "results"
+           (is (= [37 42] [@(.sumLaterFuture wrapper 19 18)
+                           @(.sumLaterFuture wrapper 22 20)]))
+           (is (= [9 101 23] (->> [9 100 21]
+                                  (map-indexed #(.sumLaterFuture wrapper %2 %1))
+                                  doall (mapv deref)))))
+         (fn []) (wrap done) fut/call (async done))))
   
 (deftest multi-futures
   (let [wrapper (fut/wrap future-test-obj "Future")
         c (fut/combine (.sumLaterFuture wrapper 19 18)
                        (.sumLaterFuture wrapper 22 20))]
     (is (instance? fut/Futures c))
-    (->> (try
-           (testing "results"
-             (is (= [37 42] @c)))
-           (catch :default e
-             (is false "Unexpected exception while evaluating task")
-             (.error js/console "Error:" e))
-           (finally
-             (done)))
-         fut/in
-         (async done))))
+    (->> #(testing "results"
+           (is (= [37 42] @c)))
+         (wrap done) fut/call (async done))))
 
 (deftest promises-and-delivery
   (let [p1 (pro/empty)
@@ -110,12 +106,37 @@
              (is false "Unexpected exception while evaluating task")
              (.error js/console "Error:" e)))
          (fn []) fut/call-forget)
-    (->> (try
-           (is (= ::sentinel @p))
-           (catch :default e
-             (is false "Unexpected exception while evaluating task")
-             (.error js/console "Error:" e))
-           (finally
-             (done)))
-         fut/in (async done))))
-    
+    (->> #(is (= ::sentinel @p))
+         (wrap done) fut/call (async done))))
+
+(deftest fibers-basics
+  (->> #(do (testing "current"
+             (is (and (fib/current) (fib/current! "" {})))
+             (is (= (fib/current) (fib/current! "" {}))))
+            (testing "yield"
+              (is (= (fib/in (fib/yield 123))))))
+       (wrap done) fut/call (async done)))
+
+(deftest fibers-in-depth
+  (testing "start and stop"
+    (->> #(let [f (fib/as (fib/yield 123)
+                          (fib/yield 456))]
+            (is (= 123 (fib/run f)))
+            (is (= 456 (fib/run f)))
+            (testing "restarting"
+              (fib/cancel f)
+              (is (= 123 (fib/run f)))
+              (is (= 456 (fib/run f))))
+            (fib/cancel f))
+         (wrap done) fut/call (async done)))
+  (testing "throwing into"
+    (->> #(let [f (fib/as (try
+                            (fib/yield 47)
+                            (catch cljs.core.ExceptionInfo e
+                              (is (= "foo" (ex-message e))))
+                            (catch :default e
+                              (is false))))]
+            (is (= 47 (fib/run f)))
+            (fib/throw-in f (ex-info "foo" {})))
+         (wrap done) fut/call (async done))))
+
