@@ -3,21 +3,33 @@
             [macchiato.futures.core :refer [wrap-future detached-task task wait]]))
 
 
+;; Going to create a mock Javascript object which has two methods. One of them
+;; returns immediately, the other one uses a callback. We'll then use this
+;; object to test our futures in a controlled manner.
+;;
+;; We could just use one of the standard node classes, but that would obscure
+;; what we're doing. I'd rather keep it as transparent as possible.
 (def test-object
   (js-obj
     "sum" #(+ %1 %2)
     "sumLater" (fn [a b callback]
-                 ; Expose an error-first callback interface
+                 ;; Expose an error-first callback interface, which is what
+                 ;; node would do (and what fibers/future expects).  That's
+                 ;; why the callback's first parameter is nil.
+                 ;;
+                 ;; While this test function returns the callback function
+                 ;; itself, that's just for my own testing purposes. It's not
+                 ;; required or expected.
+                 ;;
+                 ;; Feel free to extend or randomize the timeout if you have
+                 ;; any doubts this is being executed asynchronously.
                  (js/setTimeout #(callback nil (+ a b)) 100)
                  callback)))
-
-(identity 4)
 
 (deftest verify-test-setup
   (is test-object)
   (is (= 7 (.sum test-object 3 4)))
-  (is (fn? (.sumLater test-object 3 4 identity)))
-  )
+  (is (fn? (.sumLater test-object 3 4 identity))))
 
 (deftest test-wrapping
   (testing "Wrapping a basic object"
@@ -26,7 +38,7 @@
       (is (fn? (aget wrapper "sum")))
       (is (fn? (aget wrapper "sumLater")))))
   (testing "Wrapping with suffix"
-    (let [wrapper (wrap-future test-object false "Future" false)]
+    (let [wrapper (wrap-future test-object "Future" false false)]
       (is (some? wrapper))
       (is (fn? (aget wrapper "sumFuture")))
       (is (fn? (aget wrapper "sumLaterFuture"))))))
@@ -45,8 +57,9 @@
             (is (= [9 101 23]
                    (->> (map-indexed #(.sumLaterFuture wrapper %2 %1)
                                      [9 100 21])
-                        (map wait))
-                   ))
+                        ;; map-indexed above would return a collection of
+                        ;; futures that we can then wait on.
+                        (map wait))))
             (catch :default e
               (is false "Unexpected exception while evaluating task")
               (.error js/console "Error:" e))

@@ -6,10 +6,10 @@
   "Wraps an object or function in a future. Notice that by default we won't
   use any suffix."
   ([o]
-   (wrap-future o false "" false))
+   (wrap-future o "" false false))
   ([o suffix]
    (.wrap Future o false suffix false))
-  ([o multi? suffix stop?]
+  ([o suffix multi? stop?]
    (.wrap Future o multi? suffix stop?)))
 
 (defn detached-task
@@ -18,9 +18,9 @@
   From the node-fibers documentation:
 
   Basically this is useful if you want to run a task in a future, you
-  aren't interested in its return value, but if it throws you don't want the exception to be
-  lost. If this fiber throws, an exception will be thrown to the event loop and node will
-  probably fall down."
+  aren't interested in its return value, but if it throws you don't want the
+  exception to be lost. If this fiber throws, an exception will be thrown to
+  the event loop and node will probably fall down."
   [f]
   (->> f (.task Future) .detach))
 
