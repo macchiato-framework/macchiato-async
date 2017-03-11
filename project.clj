@@ -1,4 +1,4 @@
-(defproject macchiato/futures "0.0.3"
+(defproject macchiato/futures "0.0.4-SNAPSHOT"
   :description "node-fibers wrapper for ClojureScript"
   :url "https://github.com/macchiato-framework/macchiato-futures"
   :scm {:name "git"

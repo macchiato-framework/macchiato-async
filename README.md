@@ -5,7 +5,7 @@ Build status:
 
 Trivial ClojureScript wrapper for [node-fibers](https://github.com/laverdet/node-fibers). Originally wrote to be used in Macchiato, but can be used standalone.
 
-Current version is `0.0.3-SNAPSHOT` and probably changing regularly. 
+Current version is `0.0.4-SNAPSHOT` and probably changing regularly. 
 
 Using git-flow. Please submit your pull requests from develop.
 
@@ -26,9 +26,13 @@ See `macchiato.test.futures.core` for sample uses.
 
 All the things!  This is just a rough draft and the API might change. 
 
+- [ ] I'm currently looking at async/wait on Node 7. We might want to use that instead of wrapping a custom library.
+- [ ] Likely renaming the library to macchiato/async, since we may end up doing multiple implementations under the same library.
+
+Also, once the API settles:
+
 - We have some initial tests, expanding the test cases would be nice.
 - More documentation
-
 
 
 # License
