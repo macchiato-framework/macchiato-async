@@ -1,8 +1,8 @@
-(defproject macchiato/futures "0.0.4-SNAPSHOT"
+(defproject macchiato/async "0.0.4-SNAPSHOT"
   :description "node-fibers wrapper for ClojureScript"
-  :url "https://github.com/macchiato-framework/macchiato-futures"
+  :url "https://github.com/macchiato-framework/macchiato-async"
   :scm {:name "git"
-        :url  "https://github.com/macchiato-framework/macchiato-futures.git"}
+        :url  "https://github.com/macchiato-framework/macchiato-async.git"}
   :license {:name "MIT License"
             :url  "http://opensource.org/licenses/MIT"}
   :clojurescript? true
@@ -18,7 +18,7 @@
                    {:builds
                     {:test
                      {:source-paths ["src" "test"]
-                      :compiler     {:main          macchiato.test.futures.runner
+                      :compiler     {:main          macchiato.test.async.runner
                                      :output-to     "target/test/core.js"
                                      :target        :nodejs
                                      :optimizations :none

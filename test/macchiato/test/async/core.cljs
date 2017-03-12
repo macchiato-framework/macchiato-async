@@ -1,6 +1,6 @@
-(ns macchiato.test.futures.core
+(ns macchiato.test.async.core
   (:require [clojure.test :refer [deftest testing is async]]
-            [macchiato.futures.core :refer [wrap-future detached-task task wait]]))
+            [macchiato.async.core :refer [wrap-future detached-task task wait]]))
 
 
 ;; Going to create a mock Javascript object which has two methods. One of them

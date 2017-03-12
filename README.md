@@ -1,4 +1,4 @@
-# macchiato/futures
+# macchiato/async
 
 Build status: 
 [![CircleCI](https://circleci.com/gh/macchiato-framework/macchiato-futures.svg?style=svg)](https://circleci.com/gh/macchiato-framework/macchiato-futures)
@@ -19,14 +19,14 @@ Keeping it independent allows us this flexibility.
 
 ## Usage
 
-See `macchiato.test.futures.core` for sample uses.
+See `macchiato.test.async.core` for sample uses.
 
 
 ## TODO
 
 All the things!  This is just a rough draft and the API might change. 
 
-- [ ] Likely renaming the library to macchiato/async, since we may end up doing multiple implementations under the same library.
+- [x] Likely renaming the library to macchiato/async, since we may end up doing multiple implementations under the same library.
 - [ ] I'm currently looking at async/wait on Node 7. We might want to use that instead of wrapping a custom library.
 - [ ] Review [synchronize.js](http://alexeypetrushin.github.io/synchronize/docs/index.html) and consider a ClojureScript port.
 

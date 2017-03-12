@@ -6,6 +6,10 @@ Assume that any upgrade before we hit 0.1.0 is potentially breaking.
 
 ## 0.0.4-SNAPSHOT
 
+## Breaking changes
+
+- Renamed library to `macchiato.async`, since it's more general and we may want to support multiple implementations.
+
 ## 0.0.3
 
 ### Breaking changes
