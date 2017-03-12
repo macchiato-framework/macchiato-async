@@ -19,8 +19,7 @@ Keeping it independent allows us this flexibility.
 
 ## Usage
 
-See `macchiato.test.async.core` for sample uses.
-
+See `macchiato.test.async.futures` for sample uses.
 
 ## TODO
 

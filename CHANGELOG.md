@@ -9,6 +9,7 @@ Assume that any upgrade before we hit 0.1.0 is potentially breaking.
 ## Breaking changes
 
 - Renamed library to `macchiato.async`, since it's more general and we may want to support multiple implementations.
+- Renamed `macchiato.async.core` -> `macchiato.async.futures`, to indicate the specific implementation.
 
 ## 0.0.3
 

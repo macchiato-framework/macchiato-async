@@ -1,4 +1,4 @@
-(ns macchiato.async.core)
+(ns macchiato.async.futures)
 
 (def Future (js/require "fibers/future"))
 
