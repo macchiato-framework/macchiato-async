@@ -26,8 +26,9 @@ See `macchiato.test.futures.core` for sample uses.
 
 All the things!  This is just a rough draft and the API might change. 
 
-- [ ] I'm currently looking at async/wait on Node 7. We might want to use that instead of wrapping a custom library.
 - [ ] Likely renaming the library to macchiato/async, since we may end up doing multiple implementations under the same library.
+- [ ] I'm currently looking at async/wait on Node 7. We might want to use that instead of wrapping a custom library.
+- [ ] Review [synchronize.js](http://alexeypetrushin.github.io/synchronize/docs/index.html) and consider a ClojureScript port.
 
 Also, once the API settles:
 
