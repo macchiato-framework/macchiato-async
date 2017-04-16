@@ -1,6 +1,7 @@
-(ns macchiato.async.futures)
+(ns macchiato.async.futures
+  (:require [cljs.nodejs :as node]))
 
-(def Future (js/require "fibers/future"))
+(def Future (node/require "fibers/future"))
 
 (defn wrap-future
   "Wraps an object or function in a future. Notice that by default we won't
