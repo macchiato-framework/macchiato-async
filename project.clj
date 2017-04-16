@@ -1,5 +1,5 @@
 (defproject macchiato/async "0.0.4-SNAPSHOT"
-  :description "node-fibers wrapper for ClojureScript"
+  :description "Async function wrapper for ClojureScript"
   :url "https://github.com/macchiato-framework/macchiato-async"
   :scm {:name "git"
         :url  "https://github.com/macchiato-framework/macchiato-async.git"}

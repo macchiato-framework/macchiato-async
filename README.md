@@ -3,7 +3,7 @@
 Build status: 
 [![CircleCI](https://circleci.com/gh/macchiato-framework/macchiato-async.svg?style=svg)](https://circleci.com/gh/macchiato-framework/macchiato-async)
 
-Currently a trivial ClojureScript wrapper for [node-fibers](https://github.com/laverdet/node-fibers). Originally wrote to be used in Macchiato, but can be used standalone.
+Currently a trivial ClojureScript wrapper for [node-fibers](https://github.com/laverdet/node-fibers). Originally written to be used in Macchiato, but can be used standalone.
 
 In the near future we plan to experiment with different approaches. See the [TODO](#TODO) section below.
 
@@ -26,8 +26,8 @@ See `macchiato.test.async.futures` for sample uses.
 All the things!  This is just a rough draft and the API might change. 
 
 - [x] Likely renaming the library to macchiato/async, since we may end up doing multiple implementations under the same library.
-- [ ] I'm currently looking at async/wait on Node 7. We might want to use that instead of wrapping a custom library.
 - [ ] Review [synchronize.js](http://alexeypetrushin.github.io/synchronize/docs/index.html) and consider a ClojureScript port.
+- [ ] I'm currently looking at async/wait on Node 7. We might want to use that instead of wrapping a custom library.
 
 Also, once the API settles:
 
