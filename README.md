@@ -19,7 +19,7 @@ Keeping it independent allows us this flexibility.
 
 ## Usage
 
-See `macchiato.test.async.futures` for sample uses.
+See `macchiato.test.async.futures` and `macchiato.test.async.synchronize` for sample uses.
 
 ## TODO
 
@@ -38,9 +38,11 @@ Also, once the API settles:
 
 I welcome pull requests, as long as you're also distributing them under the MIT License.
 
-We are using git-flow. Please submit your pull requests from develop.
+We are using git-flow. Please submit your pull requests from `develop`.
 
 
 # License
+
+Contains code that was initially based on [synchronize.js](https://github.com/alexeypetrushin/synchronize/)
 
 Copyright © 2016 Numergent Limited. Distributed under the MIT License.
