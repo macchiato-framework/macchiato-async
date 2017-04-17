@@ -22,11 +22,24 @@
                  ;; Feel free to extend or randomize the timeout if you have
                  ;; any doubts this is being executed asynchronously.
                  (js/setTimeout #(callback nil (+ a b)) 100)
-                 callback)))
-
+                 callback)
+    "minusLater" (fn [a b callback]
+                   ;; Expose an error-first callback interface, which is what
+                   ;; node would do (and what fibers/future expects).  That's
+                   ;; why the callback's first parameter is nil.
+                   ;;
+                   ;; While this test function returns the callback function
+                   ;; itself, that's just for my own testing purposes. It's not
+                   ;; required or expected.
+                   ;;
+                   ;; Feel free to extend or randomize the timeout if you have
+                   ;; any doubts this is being executed asynchronously.
+                   (js/setTimeout #(callback nil (- a b)) 100)
+                   callback)))
 
 
 (deftest verify-test-setup
   (is obj-with-fns)
   (is (= 7 (.sum obj-with-fns 3 4)))
-  (is (fn? (.sumLater obj-with-fns 3 4 identity))))
+  (is (fn? (.sumLater obj-with-fns 3 4 identity)))
+  (is (fn? (.minusLater obj-with-fns 9 1 identity))))
